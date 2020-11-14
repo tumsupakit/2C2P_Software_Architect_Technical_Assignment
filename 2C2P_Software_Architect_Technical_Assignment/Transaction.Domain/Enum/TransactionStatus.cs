@@ -8,7 +8,7 @@ namespace Transaction.Domain.Enum
     public enum TransactionStatus
     {
         Approved,
-        Failed,
-        Finished
+        Rejected,
+        Done
     }
 }

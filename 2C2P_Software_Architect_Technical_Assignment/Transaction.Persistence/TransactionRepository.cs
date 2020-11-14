@@ -29,7 +29,7 @@ namespace Transaction.Persistence
             DateTime dateFromFilter = dateFrom ?? DateTime.MinValue;
             DateTime dateToFilter = dateTo ?? DateTime.MaxValue;
 
-            IQueryable<TransactionModel> query = this.dataContext.Transaction.Where(w => w.TransactionDate >= dateFrom && w.TransactionDate <= dateTo);
+            IQueryable<TransactionModel> query = this.dataContext.Transaction.Where(w => w.TransactionDate >= dateFromFilter && w.TransactionDate <= dateToFilter);
 
             if (!string.IsNullOrEmpty(currencyCode))
                 query = query.Where(w => w.CurrencyCode == currencyCode);

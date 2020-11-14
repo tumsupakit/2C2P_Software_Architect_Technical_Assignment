@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Transaction.BusinessLogic\Transaction.BusinessLogic.csproj" />
     <ProjectReference Include="..\Transaction.Persistence\Transaction.Persistence.csproj" />
   </ItemGroup>
 

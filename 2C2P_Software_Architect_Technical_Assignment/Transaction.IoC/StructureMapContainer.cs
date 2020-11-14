@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Transaction.BusinessLogic;
+using Transaction.BusinessLogic.Interfaces;
 using Transaction.Persistence;
 
 namespace Transaction.IoC
@@ -11,6 +13,7 @@ namespace Transaction.IoC
         public static IServiceCollection RegisterIoC(this IServiceCollection services) 
         {
             services.AddTransient<ITransactionRepository, TransactionRepository>();
+            services.AddTransient<ITransactionService, TransactionService>();
 
             return services;
         }

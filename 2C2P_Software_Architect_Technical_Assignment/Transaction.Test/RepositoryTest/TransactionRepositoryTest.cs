@@ -23,7 +23,7 @@ namespace Transaction.Test.RepositoryTest
             List<TransactionModel> mockData = new List<TransactionModel>()
             {
                 new TransactionModel{ Id = 1, TransactionId = "1111", TransactionDate = DateTime.Now, Amount = 10, CurrencyCode = "USD", Status = TransactionStatus.Approved },
-                new TransactionModel{ Id = 2, TransactionId = "2222", TransactionDate = DateTime.Now, Amount = 20, CurrencyCode = "THB", Status = TransactionStatus.Finished }
+                new TransactionModel{ Id = 2, TransactionId = "2222", TransactionDate = DateTime.Now, Amount = 20, CurrencyCode = "THB", Status = TransactionStatus.Done }
             };
 
             string currencyCode = string.Empty;
@@ -45,7 +45,7 @@ namespace Transaction.Test.RepositoryTest
             Mock<ITransactionRepository> mockRepository = new Mock<ITransactionRepository>();
 
             TransactionModel usdData = new TransactionModel { Id = 1, TransactionId = "1111", TransactionDate = DateTime.Now, Amount = 10, CurrencyCode = "USD", Status = TransactionStatus.Approved };
-            TransactionModel thbData = new TransactionModel { Id = 2, TransactionId = "2222", TransactionDate = DateTime.Now, Amount = 20, CurrencyCode = "THB", Status = TransactionStatus.Finished };
+            TransactionModel thbData = new TransactionModel { Id = 2, TransactionId = "2222", TransactionDate = DateTime.Now, Amount = 20, CurrencyCode = "THB", Status = TransactionStatus.Done };
 
             List<TransactionModel> mockData = new List<TransactionModel>() { usdData, thbData };
             List<TransactionModel> mockUsd = new List<TransactionModel> { usdData };
@@ -72,7 +72,7 @@ namespace Transaction.Test.RepositoryTest
             Mock<ITransactionRepository> mockRepository = new Mock<ITransactionRepository>();
 
             TransactionModel usdData = new TransactionModel { Id = 1, TransactionId = "1111", TransactionDate = DateTime.Now, Amount = 10, CurrencyCode = "USD", Status = TransactionStatus.Approved };
-            TransactionModel thbData = new TransactionModel { Id = 2, TransactionId = "2222", TransactionDate = DateTime.Now, Amount = 20, CurrencyCode = "THB", Status = TransactionStatus.Finished };
+            TransactionModel thbData = new TransactionModel { Id = 2, TransactionId = "2222", TransactionDate = DateTime.Now, Amount = 20, CurrencyCode = "THB", Status = TransactionStatus.Done };
 
             List<TransactionModel> mockData = new List<TransactionModel>() { usdData, thbData };
             List<TransactionModel> mockUsd = new List<TransactionModel> { usdData };

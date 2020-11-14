@@ -1,0 +1,22 @@
+<h1 id="tableLabel">Transaction Log</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<p *ngIf="!transactions"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="transactions">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Payment</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let transaction of transactions">
+      <td>{{ transaction.id }}</td>
+      <td>{{ transaction.payment }}</td>
+      <td>{{ transaction.status }}</td>
+    </tr>
+  </tbody>
+</table>
