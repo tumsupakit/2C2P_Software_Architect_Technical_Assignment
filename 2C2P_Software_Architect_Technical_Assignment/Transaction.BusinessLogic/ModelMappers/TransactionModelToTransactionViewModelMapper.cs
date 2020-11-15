@@ -18,7 +18,6 @@ namespace Transaction.BusinessLogic.ModelMappers
                 viewModel = new TransactionViewModel()
                 {
                     Id = item.TransactionId,
-                    CurrencyCode = item.CurrencyCode,
                     Payment = item.Amount.ToString(".00") + " " + item.CurrencyCode
                 };
 

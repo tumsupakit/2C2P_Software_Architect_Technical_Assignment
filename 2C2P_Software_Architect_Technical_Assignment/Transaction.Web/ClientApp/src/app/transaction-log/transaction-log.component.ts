@@ -9,7 +9,6 @@ import { HttpClient } from '@angular/common/http';
 export class TransactionLogComponent {
   private http: HttpClient;
   private baseUrl: string;
-  private fromPreparingPage: boolean = true;
 
   public transactions: Transaction[];
   public currencyCodes: string[] = [];
@@ -23,10 +22,10 @@ export class TransactionLogComponent {
     this.http = http;
     this.baseUrl = baseUrl;
     this.getTransactions();
+    this.getCurrency();
   }
 
   public btnSearchClick() {
-    this.fromPreparingPage = false;
     this.getTransactions();
   }
 
@@ -38,18 +37,13 @@ export class TransactionLogComponent {
     
     this.http.get<Transaction[]>(this.baseUrl + 'api/transaction' + filter).subscribe(result => {
       this.transactions = result;
-      if(this.fromPreparingPage) {
-        this.getAllCurrency();
-      }
     }, error => console.error(error));
   }
 
-  private getAllCurrency() {
-    this.transactions.forEach(element => {
-      if(this.currencyCodes.find(f => f == element.currencyCode) == undefined) {
-        this.currencyCodes.push(element.currencyCode);
-      }
-    });
+  private getCurrency() {
+    this.http.get<string[]>(this.baseUrl + 'api/currency').subscribe(result => {
+      this.currencyCodes = result;
+    }, error => console.error(error));
   }
 }
 

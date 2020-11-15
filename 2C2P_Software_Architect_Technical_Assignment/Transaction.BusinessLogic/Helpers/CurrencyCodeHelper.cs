@@ -8,11 +8,16 @@ namespace Transaction.BusinessLogic.Helpers
 {
     public static class CurrencyCodeHelper
     {
-        public static bool IsCurrencyFormatCorrect(string currencyCode) 
+        public static bool IsCurrencyFormatCorrect(string currencyCode) => GetAllCurrency().Contains(currencyCode);
+
+        public static string[] GetAllCurrency() 
         {
             return CultureInfo.GetCultures(CultureTypes.SpecificCultures)
-            .Select(x => (new RegionInfo(x.LCID)).ISOCurrencySymbol)
-            .Contains(currencyCode);
+                    .Select(s => (new RegionInfo(s.LCID)).ISOCurrencySymbol)
+                    .Distinct()
+                    .OrderBy(s => s)
+                    .ToArray();
         }
+            
     }
 }
