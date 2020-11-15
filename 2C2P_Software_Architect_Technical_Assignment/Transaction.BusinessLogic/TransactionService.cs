@@ -20,17 +20,20 @@ namespace Transaction.BusinessLogic
         IFileValidator fileValidator;
         ITransactionReader transactionReader;
         IXmlValidator xmlValidator;
+        ICsvValidator csvValidator;
 
 
         public TransactionService(ITransactionRepository transactionRepository, 
             IFileValidator fileValidator, 
             ITransactionReader transactionReader, 
-            IXmlValidator xmlValidator)
+            IXmlValidator xmlValidator,
+            ICsvValidator csvValidator)
         {
             this.transactionRepository = transactionRepository;
             this.fileValidator = fileValidator;
             this.transactionReader = transactionReader;
             this.xmlValidator = xmlValidator;
+            this.csvValidator = csvValidator;
         }
 
         public IEnumerable<TransactionViewModel> Filter(TransactionFilter filter)
@@ -53,9 +56,7 @@ namespace Transaction.BusinessLogic
                 try
                 {
                     if (file.FileName.Contains(".csv"))
-                    {
-
-                    }
+                        CallCsvReader(file, ref errorMessages);
                     else
                         CallXmlReader(file, ref errorMessages);
                 }
@@ -72,11 +73,31 @@ namespace Transaction.BusinessLogic
             return errorMessages;
         }
 
+        private void CallCsvReader(IFormFile file, ref List<string> errorMesages)
+        {
+            var Reader = transactionReader as CsvTransactionReader;
+
+            var csvTransactionModels = (List<CsvTransactionModel>)Reader.Read(file);
+            if (csvTransactionModels.Count > 0)
+            {
+                foreach (CsvTransactionModel transaction in csvTransactionModels)
+                {
+                    errorMesages.AddRange(csvValidator.Validate(transaction));
+                }
+
+                if (errorMesages.Count == 0)
+                {
+                    IEnumerable<TransactionModel> transactionModels = csvTransactionModels.Select(s => s.MapToModel());
+                    transactionRepository.AddRange(transactionModels);
+                }
+            }
+        }
+
         private void CallXmlReader(IFormFile file, ref List<string> errorMesages)
         {
             var Reader = transactionReader as XmlTransactionReader;
 
-            XmlTransactionModel xmlTransactionModel = Reader.Read(file);
+            XmlTransactionModel xmlTransactionModel = (XmlTransactionModel)Reader.Read(file);
             if (xmlTransactionModel != null) 
             {
                 foreach (XmlTransaction transaction in xmlTransactionModel.Transactions)

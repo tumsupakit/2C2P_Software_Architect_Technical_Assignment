@@ -56,7 +56,7 @@ namespace Transaction.Test.UnitTest
             List<string> result = xmlValidator.Validate(xmlTransaction);
 
             Assert.IsTrue(result.Count == 1);
-            Assert.IsTrue(result[0].EndsWith("Transaction Id length should be less than 50"));
+            Assert.IsTrue(result[0].EndsWith("Transaction ID length should be less than 50"));
         }
 
         [TestMethod]

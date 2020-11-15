@@ -26,7 +26,7 @@ namespace Transaction.Test.IntegrationTest
         public void Upload_PdfIntactFile_Pass() 
         {
             ITransactionService transactionService = new TransactionService(
-                mockTransactionRepository.Object, new FileValidator(), new XmlTransactionReader(), new XmlValidator());
+                mockTransactionRepository.Object, new FileValidator(), new XmlTransactionReader(), new XmlValidator(), new CsvValidator());
 
             var fileMock = new Mock<IFormFile>();
             string fileName = "test.xml";
@@ -59,7 +59,7 @@ namespace Transaction.Test.IntegrationTest
         public void Upload_CorruptPdfFile_Fail()
         {
             ITransactionService transactionService = new TransactionService(
-                mockTransactionRepository.Object, new FileValidator(), new XmlTransactionReader(), new XmlValidator());
+                mockTransactionRepository.Object, new FileValidator(), new XmlTransactionReader(), new XmlValidator(), new CsvValidator());
 
             var fileMock = new Mock<IFormFile>();
             string fileName = "test.xml";
@@ -88,5 +88,58 @@ namespace Transaction.Test.IntegrationTest
             mockTransactionRepository.Verify(v => v.AddRange(It.IsAny<IEnumerable<TransactionModel>>()), Times.Never);
         }
 
+        [TestMethod]
+        public void Upload_CsvIntactFile_Pass()
+        {
+            ITransactionService transactionService = new TransactionService(
+                mockTransactionRepository.Object, new FileValidator(), new CsvTransactionReader(), new XmlValidator(), new CsvValidator());
+
+            var fileMock = new Mock<IFormFile>();
+            string fileName = "test.csv";
+            string content = "\"Invoice0000001\",\"1,000.00\", \"USD\", \"20/02/2019 12:33:16\", \"Approved\"";
+
+            var ms = new MemoryStream();
+            var writer = new StreamWriter(ms);
+            writer.Write(content);
+            writer.Flush();
+            ms.Position = 0;
+
+            fileMock.Setup(_ => _.OpenReadStream()).Returns(ms);
+            fileMock.Setup(_ => _.FileName).Returns(fileName);
+            fileMock.Setup(_ => _.Length).Returns(ms.Length);
+
+            IFormFile file = fileMock.Object;
+            IList<string> errorMessages = transactionService.Upload(file);
+
+            Assert.IsTrue(errorMessages.Count == 0);
+            mockTransactionRepository.Verify(v => v.AddRange(It.IsAny<IEnumerable<TransactionModel>>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void Upload_CorruptCsvFile_Fail()
+        {
+            ITransactionService transactionService = new TransactionService(
+                mockTransactionRepository.Object, new FileValidator(), new CsvTransactionReader(), new XmlValidator(), new CsvValidator());
+
+            var fileMock = new Mock<IFormFile>();
+            string fileName = "test.csv";
+            string content = "\"Invoice0000001\",\"1,000.00\", , \"20/02/2019 12:33:16\", \"Approved\"";
+
+            var ms = new MemoryStream();
+            var writer = new StreamWriter(ms);
+            writer.Write(content);
+            writer.Flush();
+            ms.Position = 0;
+
+            fileMock.Setup(_ => _.OpenReadStream()).Returns(ms);
+            fileMock.Setup(_ => _.FileName).Returns(fileName);
+            fileMock.Setup(_ => _.Length).Returns(ms.Length);
+
+            IFormFile file = fileMock.Object;
+            IList<string> errorMessages = transactionService.Upload(file);
+
+            Assert.IsTrue(errorMessages.Count > 0);
+            mockTransactionRepository.Verify(v => v.AddRange(It.IsAny<IEnumerable<TransactionModel>>()), Times.Never);
+        }
     }
 }

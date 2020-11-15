@@ -16,7 +16,9 @@ namespace Transaction.IoC
             services.AddTransient<ITransactionService, TransactionService>();
             services.AddTransient<IFileValidator, FileValidator>();
             services.AddTransient<ITransactionReader, XmlTransactionReader>();
+            services.AddTransient<ITransactionReader, CsvTransactionReader>();
             services.AddTransient<IXmlValidator, XmlValidator>();
+            services.AddTransient<ICsvValidator, CsvValidator>();
 
             return services;
         }

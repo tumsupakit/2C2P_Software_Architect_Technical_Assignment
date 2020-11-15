@@ -13,7 +13,7 @@ namespace Transaction.BusinessLogic
 {
     public class XmlTransactionReader : ITransactionReader
     {
-        public XmlTransactionModel Read(IFormFile file)
+        public object Read(IFormFile file)
         {
             var stream = file.OpenReadStream();
             var serializer = new XmlSerializer(typeof(XmlTransactionModel));
