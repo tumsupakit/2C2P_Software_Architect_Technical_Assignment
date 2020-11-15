@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Transaction.BusinessLogic.Interfaces;
 using Transaction.BusinessLogic.ViewModels;
 
@@ -28,12 +25,16 @@ namespace Transaction.Web.Controllers
             return transactions;
         }
 
-        [HttpPost, DisableRequestSizeLimit]
-        public IActionResult Post() 
+        [HttpPost]
+        public IActionResult Post()
         {
             IFormFile file = Request.Form.Files[0];
+            IList<string> errorMessages = transactionService.Upload(file);
 
-            return Ok();
+            if (errorMessages.Count > 0)
+                return BadRequest(errorMessages);
+            else
+                return Ok();
         }
     }
 }

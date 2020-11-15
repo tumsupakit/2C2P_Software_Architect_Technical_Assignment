@@ -3,12 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Transaction.BusinessLogic.ViewModels;
-using Transaction.Domain;
 
 namespace Transaction.BusinessLogic.Interfaces
 {
-    public interface ITransactionReader
+    public interface ICsvTransactionReader
     {
-        object Read(IFormFile file);
+        List<CsvTransactionModel> Read(IFormFile file);
     }
 }

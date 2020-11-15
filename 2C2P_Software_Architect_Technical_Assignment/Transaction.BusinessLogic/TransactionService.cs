@@ -18,20 +18,22 @@ namespace Transaction.BusinessLogic
     {
         ITransactionRepository transactionRepository;
         IFileValidator fileValidator;
-        ITransactionReader transactionReader;
+        IXmlTransactionReader xmlTransactionReader;
+        ICsvTransactionReader csvTransactionReader;
         IXmlValidator xmlValidator;
         ICsvValidator csvValidator;
 
-
         public TransactionService(ITransactionRepository transactionRepository, 
-            IFileValidator fileValidator, 
-            ITransactionReader transactionReader, 
+            IFileValidator fileValidator,
+            IXmlTransactionReader xmlTransactionReader,
+            ICsvTransactionReader csvTransactionReader,
             IXmlValidator xmlValidator,
             ICsvValidator csvValidator)
         {
             this.transactionRepository = transactionRepository;
             this.fileValidator = fileValidator;
-            this.transactionReader = transactionReader;
+            this.xmlTransactionReader = xmlTransactionReader;
+            this.csvTransactionReader = csvTransactionReader;
             this.xmlValidator = xmlValidator;
             this.csvValidator = csvValidator;
         }
@@ -75,9 +77,8 @@ namespace Transaction.BusinessLogic
 
         private void CallCsvReader(IFormFile file, ref List<string> errorMesages)
         {
-            var Reader = transactionReader as CsvTransactionReader;
 
-            var csvTransactionModels = (List<CsvTransactionModel>)Reader.Read(file);
+            List<CsvTransactionModel> csvTransactionModels = csvTransactionReader.Read(file);
             if (csvTransactionModels.Count > 0)
             {
                 foreach (CsvTransactionModel transaction in csvTransactionModels)
@@ -95,9 +96,7 @@ namespace Transaction.BusinessLogic
 
         private void CallXmlReader(IFormFile file, ref List<string> errorMesages)
         {
-            var Reader = transactionReader as XmlTransactionReader;
-
-            XmlTransactionModel xmlTransactionModel = (XmlTransactionModel)Reader.Read(file);
+            XmlTransactionModel xmlTransactionModel = xmlTransactionReader.Read(file);
             if (xmlTransactionModel != null) 
             {
                 foreach (XmlTransaction transaction in xmlTransactionModel.Transactions)

@@ -6,14 +6,14 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { CounterComponent } from './counter/counter.component';
+import { TransactionUploadComponent } from './transaction-upload/transaction-upload.component';
 import { TransactionLogComponent } from './transaction-log/transaction-log.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    CounterComponent,
+    TransactionUploadComponent,
     TransactionLogComponent
   ],
   imports: [
@@ -22,7 +22,7 @@ import { TransactionLogComponent } from './transaction-log/transaction-log.compo
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: TransactionLogComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
+      { path: 'Upload', component: TransactionUploadComponent },
     ])
   ],
   providers: [],

@@ -9,9 +9,9 @@ using Transaction.BusinessLogic.ViewModels;
 
 namespace Transaction.BusinessLogic
 {
-    public class CsvTransactionReader : ITransactionReader
+    public class CsvTransactionReader : ICsvTransactionReader
     {
-        public object Read(IFormFile file)
+        public List<CsvTransactionModel> Read(IFormFile file)
         {
             List<string> listData = new List<string>();
             using (var reader = new StreamReader(file.OpenReadStream())) 

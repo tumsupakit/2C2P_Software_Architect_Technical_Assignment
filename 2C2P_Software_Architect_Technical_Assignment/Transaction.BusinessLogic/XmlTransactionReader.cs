@@ -11,9 +11,9 @@ using Transaction.Domain;
 
 namespace Transaction.BusinessLogic
 {
-    public class XmlTransactionReader : ITransactionReader
+    public class XmlTransactionReader : IXmlTransactionReader
     {
-        public object Read(IFormFile file)
+        public XmlTransactionModel Read(IFormFile file)
         {
             var stream = file.OpenReadStream();
             var serializer = new XmlSerializer(typeof(XmlTransactionModel));

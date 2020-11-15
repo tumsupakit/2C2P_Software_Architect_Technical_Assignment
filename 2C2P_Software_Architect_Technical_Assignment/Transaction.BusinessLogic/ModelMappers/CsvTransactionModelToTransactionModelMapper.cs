@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using Transaction.BusinessLogic.ViewModels;
 using Transaction.Domain;
@@ -11,18 +12,18 @@ namespace Transaction.BusinessLogic.ModelMappers
     {
         public static TransactionModel MapToModel(this CsvTransactionModel item) 
         {
-            var transactionStatus = new Dictionary<string, TransactionStatus>();
-            transactionStatus.Add("Approved", TransactionStatus.Approved);
-            transactionStatus.Add("Failed", TransactionStatus.Rejected);
-            transactionStatus.Add("Finished", TransactionStatus.Done);
+            var statusDictionary = new Dictionary<string, TransactionStatus>();
+            statusDictionary.Add("Approved", TransactionStatus.Approved);
+            statusDictionary.Add("Failed", TransactionStatus.Rejected);
+            statusDictionary.Add("Finished", TransactionStatus.Done);
 
             return new TransactionModel
             {
                 TransactionId = item.TransactionId,
                 Amount = decimal.Parse(item.Amount),
                 CurrencyCode = item.CurrencyCode,
-                TransactionDate = DateTime.Parse(item.TransactionDate),
-                
+                TransactionDate = DateTime.ParseExact(item.TransactionDate, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture),
+                Status = statusDictionary[item.Status]
             };
         }
     }

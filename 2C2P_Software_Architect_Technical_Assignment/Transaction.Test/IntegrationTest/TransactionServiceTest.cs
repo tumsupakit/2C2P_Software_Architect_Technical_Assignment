@@ -26,7 +26,8 @@ namespace Transaction.Test.IntegrationTest
         public void Upload_PdfIntactFile_Pass() 
         {
             ITransactionService transactionService = new TransactionService(
-                mockTransactionRepository.Object, new FileValidator(), new XmlTransactionReader(), new XmlValidator(), new CsvValidator());
+                mockTransactionRepository.Object, new FileValidator(), new XmlTransactionReader(), 
+                new CsvTransactionReader(), new XmlValidator(), new CsvValidator());
 
             var fileMock = new Mock<IFormFile>();
             string fileName = "test.xml";
@@ -59,7 +60,8 @@ namespace Transaction.Test.IntegrationTest
         public void Upload_CorruptPdfFile_Fail()
         {
             ITransactionService transactionService = new TransactionService(
-                mockTransactionRepository.Object, new FileValidator(), new XmlTransactionReader(), new XmlValidator(), new CsvValidator());
+                mockTransactionRepository.Object, new FileValidator(), new XmlTransactionReader(),
+                new CsvTransactionReader(), new XmlValidator(), new CsvValidator());
 
             var fileMock = new Mock<IFormFile>();
             string fileName = "test.xml";
@@ -92,7 +94,8 @@ namespace Transaction.Test.IntegrationTest
         public void Upload_CsvIntactFile_Pass()
         {
             ITransactionService transactionService = new TransactionService(
-                mockTransactionRepository.Object, new FileValidator(), new CsvTransactionReader(), new XmlValidator(), new CsvValidator());
+                mockTransactionRepository.Object, new FileValidator(), new XmlTransactionReader(),
+                new CsvTransactionReader(), new XmlValidator(), new CsvValidator());
 
             var fileMock = new Mock<IFormFile>();
             string fileName = "test.csv";
@@ -119,7 +122,8 @@ namespace Transaction.Test.IntegrationTest
         public void Upload_CorruptCsvFile_Fail()
         {
             ITransactionService transactionService = new TransactionService(
-                mockTransactionRepository.Object, new FileValidator(), new CsvTransactionReader(), new XmlValidator(), new CsvValidator());
+                mockTransactionRepository.Object, new FileValidator(), new XmlTransactionReader(),
+                new CsvTransactionReader(), new XmlValidator(), new CsvValidator());
 
             var fileMock = new Mock<IFormFile>();
             string fileName = "test.csv";
