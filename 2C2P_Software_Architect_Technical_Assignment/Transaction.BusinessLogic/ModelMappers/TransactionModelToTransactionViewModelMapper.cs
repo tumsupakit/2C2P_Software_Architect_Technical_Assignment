@@ -9,22 +9,22 @@ namespace Transaction.BusinessLogic.ModelMappers
 {
     public static class TransactionModelToTransactionViewModelMapper
     {
-        public static TransactionViewModel MapToViewModel(this TransactionModel model) 
+        public static TransactionViewModel MapToViewModel(this TransactionModel item) 
         {
             TransactionViewModel viewModel = null;
 
-            if (model != null) 
+            if (item != null) 
             {
                 viewModel = new TransactionViewModel()
                 {
-                    Id = model.TransactionId,
-                    CurrencyCode = model.CurrencyCode,
-                    Payment = $"{model.Amount.ToString(".00") } {model.CurrencyCode}"
+                    Id = item.TransactionId,
+                    CurrencyCode = item.CurrencyCode,
+                    Payment = item.Amount.ToString(".00") + " " + item.CurrencyCode
                 };
 
-                if (model.Status == TransactionStatus.Approved)
+                if (item.Status == TransactionStatus.Approved)
                     viewModel.Status = "A";
-                else if (model.Status == TransactionStatus.Rejected)
+                else if (item.Status == TransactionStatus.Rejected)
                     viewModel.Status = "R";
                 else
                     viewModel.Status = "D";
