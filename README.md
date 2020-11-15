@@ -1,4 +1,4 @@
-# 2C2P_Software_Architect_Technical_Assignment
+# 2C2P: Software Architect Technical Assignment
 Implement the features that the first one use to show transaction log and the second one use for uploading file 
 
 # Technologies
