@@ -18,6 +18,7 @@ namespace Transaction.BusinessLogic.ModelMappers
                 viewModel = new TransactionViewModel()
                 {
                     Id = model.TransactionId,
+                    CurrencyCode = model.CurrencyCode,
                     Payment = $"{model.Amount.ToString(".00") } {model.CurrencyCode}"
                 };
 

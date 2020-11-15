@@ -1,10 +1,69 @@
-<h1 id="tableLabel">Transaction Log</h1>
-
-<p>This component demonstrates fetching data from the server.</p>
+<div class="row">
+  <h1 id="tableLabel">Transaction Log</h1>
+</div>
 
 <p *ngIf="!transactions"><em>Loading...</em></p>
 
+<div class="row" *ngIf="transactions">
+  <div class="col-1">
+    <h3>Filter</h3>
+  </div>
+  <div class="col-2 form-group">
+    <div class="row">
+      <div class="col-5">
+        <label>Currency</label>
+      </div>
+      <div class="col-7">
+        <select class="form-control" [(ngModel)]="currencyCodeFilter">
+          <option value="">All</option>
+          <option *ngFor="let currencyCode of currencyCodes" [ngValue]="currencyCode">{{currencyCode}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="col-3 form-group">
+    <div class="row">
+      <div class="col-3">
+        <label>From</label>
+      </div>
+      <div class="col-9">
+        <input type="date" class="form-control" [(ngModel)]="dateFromFilter">
+      </div>
+    </div>
+  </div>
+  <div class="col-3 form-group">
+    <div class="row">
+      <div class="col-3">
+        <label>To</label>
+      </div>
+      <div class="col-9">
+        <input type="date" class="form-control" [(ngModel)]="dateToFilter">
+      </div>
+    </div>
+  </div>
+  <div class="col-2 form-group">
+    <div class="row">
+      <div class="col-3">
+        <label>Status</label>  
+      </div>
+      <div class="col-9">
+        <select class="form-control" [(ngModel)]="statusFilter">
+          <option value="undefined">All</option>
+          <option value="0">Approved</option>
+          <option value="1">Rejected</option>
+          <option value="2">Done</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="col-1">
+    <button class="btn btn-block btn-primary" (click)="btnSearchClick()">Search</button> 
+  </div>
+</div>
+
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="transactions">
+  
+
   <thead>
     <tr>
       <th>Id</th>

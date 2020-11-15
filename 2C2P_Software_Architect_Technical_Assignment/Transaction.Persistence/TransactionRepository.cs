@@ -27,7 +27,7 @@ namespace Transaction.Persistence
         public IEnumerable<TransactionModel> Filter(string currencyCode, DateTime? dateFrom, DateTime? dateTo, TransactionStatus? status)
         {
             DateTime dateFromFilter = dateFrom ?? DateTime.MinValue;
-            DateTime dateToFilter = dateTo ?? DateTime.MaxValue;
+            DateTime dateToFilter = dateTo.HasValue ? dateTo.Value.AddDays(1).AddMilliseconds(-1) : DateTime.MaxValue;
 
             IQueryable<TransactionModel> query = this.dataContext.Transaction.Where(w => w.TransactionDate >= dateFromFilter && w.TransactionDate <= dateToFilter);
 
