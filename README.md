@@ -10,12 +10,12 @@ Implement the features that the first one use to show transaction log and the se
 * Presentation Tier : Use to be the front end layer and often built on web technologies such as HTML5, JavaScript, CSS or web development frameworks
   * Project that place in this tier
     * Transaction.Web  
-* Application Tier : contains the functional business logic which can drive the application capabilities  
+* Application Tier : contains the functional business logic and models which can drive the application capabilities  
   * Project that place in this tier
     * Transaction.BusinessLogic
     * Transaction.Domain
     * Transaction.IoC
     * Transaction.Persistence
-* Data Tier : Use to handle database or data storage connection
+* Data Tier : Use to handle the instance of database or data storage
   * Project that place in this tier
     * Transaction.DataAccess
